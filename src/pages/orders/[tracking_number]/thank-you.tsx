@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 import { useTranslation } from 'next-i18next';
 import { useSettings } from '@/framework/settings';
 
-// export { getServerSideProps } from '@/framework/order.ssr';
+export { getServerSideProps } from '@/framework/order.ssr';
 
 export default function OrderPage() {
   const { settings } = useSettings();

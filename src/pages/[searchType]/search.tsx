@@ -26,7 +26,7 @@ const MobileNavigation = dynamic(
   },
 );
 
-// export { getServerSideProps } from '@/framework/search.ssr';
+export { getServerSideProps } from '@/framework/search.ssr';
 
 export default function SearchPage() {
   const { query } = useRouter();

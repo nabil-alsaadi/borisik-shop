@@ -129,21 +129,21 @@ export const siteSettings = {
         title: 'text-explore',
         links: [
           {
-            name: 'Shops',
-            href: Routes.shops,
+            name: 'About Us',
+            href: Routes.contactUs,
           },
           {
-            name: 'Authors',
-            href: Routes.authors,
+            name: 'Job Offers',
+            href: '',
           },
           {
-            name: 'Flash Deals',
-            href: Routes?.flashSale,
+            name: 'Reviews',
+            href: '',
           },
-          {
-            name: 'Coupon',
-            href: Routes.coupons,
-          },
+          // {
+          //   name: 'Coupon',
+          //   href: Routes.coupons,
+          // },
         ],
       },
       {
@@ -166,10 +166,10 @@ export const siteSettings = {
       {
         title: 'text-our-information',
         links: [
-          {
-            name: 'Manufacturers',
-            href: Routes?.manufacturers,
-          },
+          // {
+          //   name: 'Manufacturers',
+          //   href: Routes?.manufacturers,
+          // },
           {
             name: 'Privacy policies',
             href: Routes.privacy,

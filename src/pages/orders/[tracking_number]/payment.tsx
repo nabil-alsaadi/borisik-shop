@@ -9,7 +9,7 @@ import { useRouter } from 'next/router';
 import { useModalAction } from '@/components/ui/modal/modal.context';
 import { useSettings } from '@/framework/settings';
 
-// export { getServerSideProps } from '@/framework/order.ssr';
+export { getServerSideProps } from '@/framework/order.ssr';
 
 export default function OrderPage() {
   const { settings } = useSettings();

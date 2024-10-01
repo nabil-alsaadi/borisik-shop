@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { useOrder } from '@/framework/order';
 import Spinner from '@/components/ui/loaders/spinner/spinner';
 import { useSettings } from '@/framework/settings';
-// export { getServerSideProps } from '@/framework/order.ssr';
+export { getServerSideProps } from '@/framework/order.ssr';
 
 export default function OrderPage() {
   const { query } = useRouter();

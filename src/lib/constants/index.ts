@@ -1,5 +1,4 @@
 import { User } from '@/types';
-import { NEXT_PUBLIC_DEFAULT_LANGUAGE } from '../../../constants';
 import { atom } from 'jotai';
 
 export const CART_KEY = 'pick-cart';
@@ -14,7 +13,7 @@ export const CHECKOUT = 'pickbazar-checkout';
 export const SHOPS_LIMIT = 20;
 export const RTL_LANGUAGES: ReadonlyArray<string> = ['ar', 'he'];
 export const PRODUCT_INITIAL_FETCH_LIMIT = 30;
-export const DEFAULT_LANGUAGE = NEXT_PUBLIC_DEFAULT_LANGUAGE ?? 'en';
+export const DEFAULT_LANGUAGE = process.env.NEXT_PUBLIC_DEFAULT_LANGUAGE ?? 'en';
 export const EMAIL_VERIFIED = 'emailVerified';
 export const RESPONSIVE_WIDTH = 1024 as number;
 
