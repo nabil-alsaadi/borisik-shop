@@ -15,7 +15,9 @@ import { drawerAtom } from '@/store/drawer-atom';
 
 const CartSidebarView = () => {
   const { t } = useTranslation('common');
-  const { items, totalUniqueItems, total, language } = useCart();
+
+  const { items, totalUniqueItems, total, language } = useCart()
+  const { locale } = useRouter();
   const [_, closeSidebar] = useAtom(drawerAtom);
   const router = useRouter();
   function handleCheckout() {
@@ -23,11 +25,11 @@ const CartSidebarView = () => {
     if (isRegularCheckout) {
       console.log('handleCheckout')
       router.push(Routes.checkout, undefined, {
-        locale: language,
+        locale: locale,
       });
     } else {
       router.push(Routes.checkoutDigital, undefined, {
-        locale: language,
+        locale: locale,
       });
     }
 
