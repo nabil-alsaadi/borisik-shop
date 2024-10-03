@@ -123,7 +123,7 @@ const OrderDetails = ({ order, loadingStatus }: Props) => {
           {tracking_number}
         </h2>
         <div className="flex items-center">
-          {order?.payment_gateway !== 'CASH_ON_DELIVERY' &&
+          {/* {order?.payment_gateway !== 'CASH_ON_DELIVERY' &&
           order?.payment_status !==
             PaymentStatus?.FAILED?.toLocaleLowerCase() &&
           order?.payment_status !==
@@ -131,7 +131,7 @@ const OrderDetails = ({ order, loadingStatus }: Props) => {
             <RefundView status={refund?.status} orderId={id} />
           ) : (
             ''
-          )}
+          )} */}
           <Link
             href={Routes.order(tracking_number)}
             className="flex items-center text-sm font-semibold text-accent no-underline transition duration-200 hover:text-accent-hover focus:text-accent-hover"

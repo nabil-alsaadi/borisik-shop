@@ -200,19 +200,19 @@ export default function CreateOrUpdateAddressForm() {
       address: [formattedInput],
     });
     // only for nest js address system
-    setAddress([
-      ...oldAddress.filter((i: any) => i?.id !== address?.id),
-      {
-        id: address?.id ? address?.id : new Date(),
-        // customer_id: customerId,
-        title: values.title,
-        type: type,
-        address: {
-          ...values.address,
-        },
-        location: values.location,
-      },
-    ] as any);
+    // setAddress([
+    //   ...oldAddress.filter((i: any) => i?.id !== address?.id),
+    //   {
+    //     id: address?.id ? address?.id : new Date(),
+    //     // customer_id: customerId,
+    //     title: values.title,
+    //     type: type,
+    //     address: {
+    //       ...values.address,
+    //     },
+    //     location: values.location,
+    //   },
+    // ] as any);
   };
   return (
     <div className="min-h-screen p-5 bg-light sm:p-8 md:min-h-0 md:rounded-xl">

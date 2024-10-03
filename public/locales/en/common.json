@@ -531,5 +531,6 @@
   "text-title-language": "Language",
   "text-maintenance-mode-title": "Maintenance Mode Begins In",
   "text-offers-title": "Offers",
-  "text-already-review": "Already reviewed"
+  "text-already-review": "Already reviewed",
+  "order-note" : "Order Note"
 }

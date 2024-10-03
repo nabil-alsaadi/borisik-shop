@@ -82,7 +82,7 @@ export default function CheckoutPage() {
               label={t('text-delivery-schedule')}
               count={4}
             />
-            <OrderNote count={5} label={t('Order Note')} />
+            <OrderNote count={5} label={t('order-note')} />
           </div>
           <div className="mt-10 mb-10 w-full sm:mb-12 lg:mb-0 lg:w-96">
             <RightSideView />

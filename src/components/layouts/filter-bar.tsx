@@ -38,7 +38,7 @@ export default function FilterBar({
         <FilterIcon width="18" height="14" className="ltr:mr-2 rtl:ml-2" />
         {t('text-filter')}
       </button>
-      <GroupsDropdownMenu />
+      {/* <GroupsDropdownMenu /> */}
     </div>
   );
 }

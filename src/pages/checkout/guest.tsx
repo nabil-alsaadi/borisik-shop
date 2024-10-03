@@ -91,7 +91,7 @@ export default function GuestCheckoutPage() {
               label={t('text-delivery-schedule')}
               count={5}
             />
-            <OrderNote count={6} label={t('Order Note')} />
+            <OrderNote count={6} label={t('order-note')} />
           </div>
           <div className="mt-10 mb-10 w-full sm:mb-12 lg:mb-0 lg:w-96">
             <RightSideView />
