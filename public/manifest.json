@@ -1,6 +1,6 @@
 {
-  "name": "PickBazar E-Commerce",
-  "short_name": "PickBazar",
+  "name": "RedCaviar",
+  "short_name": "RedCaviar",
   "theme_color": "#ffffff",
   "background_color": "#004740",
   "display": "fullscreen",
@@ -20,6 +20,5 @@
       "type": "image/png",
       "purpose": "maskable any"
     }
-  ],
-  "splash_pages": null
+  ]
 }

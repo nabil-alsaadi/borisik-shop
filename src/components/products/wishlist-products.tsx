@@ -70,7 +70,7 @@ function WishlistItem({ product }: { product: Product }) {
           </Link>
 
           {/* <p className="mt-3 space-y-2 space-x-3.5 sm:space-y-0 rtl:sm:space-x-reverse"> */}
-          <p className="mt-1.5 flex flex-col items-start space-y-3">
+          {/* <p className="mt-1.5 flex flex-col items-start space-y-3">
             <Link
               href={Routes.shop(product?.shop?.slug)}
               className="inline-block w-auto text-sm font-semibold text-body-dark transition-colors hover:text-accent"
@@ -78,7 +78,7 @@ function WishlistItem({ product }: { product: Product }) {
               {product?.shop?.name}
             </Link>
             <Rating rating={product?.ratings} variant="xs" boxed />
-          </p>
+          </p> */}
         </div>
 
         <div className="mt-4 flex w-full flex-col justify-between space-y-3 xs:flex-row xs:space-y-0 sm:w-auto sm:flex-col sm:justify-end sm:space-y-3 md:mt-0">
@@ -171,7 +171,7 @@ const WishlistProducts: React.FC = () => {
           </h1>
         </div>
         <NotFound
-          text="text-no-download"
+          text="text-no-wish-list"
           className="mx-auto w-full md:w-7/12"
         />
       </div>

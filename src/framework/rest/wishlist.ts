@@ -64,7 +64,7 @@ export function useWishlist(options?: WishlistQueryOptions) {
 
   const formattedOptions = {
     ...options,
-    // language: locale
+    language: locale
   };
 
   const {

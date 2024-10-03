@@ -532,5 +532,6 @@
   "text-maintenance-mode-title": "Maintenance Mode Begins In",
   "text-offers-title": "Offers",
   "text-already-review": "Already reviewed",
-  "order-note" : "Order Note"
+  "order-note" : "Order Note",
+  "text-no-wish-list": "wishlist is empty"
 }
