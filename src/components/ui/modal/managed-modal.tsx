@@ -19,6 +19,10 @@ const CreateOrUpdateAddressForm = dynamic(
   () => import('@/components/address/address-form'),
   { ssr: false }
 );
+const SelectLocationMap = dynamic(
+  () => import('@/components/address/MapWithMarker'),
+  { ssr: false }
+);
 const LocationBasedShopForm = dynamic(
   () => import('@/components/form/location-based-shop-form'),
   { ssr: false }
@@ -109,6 +113,7 @@ const ManagedModal = () => {
       {view === 'OTP_LOGIN' && <OtpLoginView />}
       {view === 'REFUND_REQUEST' && <CreateRefundView />}
       {view === 'ADD_OR_UPDATE_ADDRESS' && <CreateOrUpdateAddressForm />}
+      {view === 'SELECT_LOCATION_MAP' && <SelectLocationMap />}
       {view === 'ADD_OR_UPDATE_GUEST_ADDRESS' && (
         <CreateOrUpdateGuestAddressForm />
       )}

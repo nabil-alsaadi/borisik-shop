@@ -198,7 +198,7 @@ const Header = ({ layout }: { layout?: string }) => {
                     <SearchIcon className="h-4 w-4" />
                   </Button>
                 ) : null}
-                {settings?.useGoogleMap && (
+                {/* {settings?.useGoogleMap && (
                   <div
                     className={cn(
                       'relative flex justify-center lg:w-auto lg:border-none',
@@ -227,7 +227,7 @@ const Header = ({ layout }: { layout?: string }) => {
                       closeLocation={closeLocation}
                     />
                   </div>
-                )}
+                )} */}
 
                 {isMultiLangEnable ? (
                   <div className="ms-auto shrink-0">

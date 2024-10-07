@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { atom } from 'jotai';
 
 export const locationAtom = atom<GoogleMapLocation | null>(null);
+export const markerAtom = atom<GoogleMapLocation | null>(null);
 
 const libraries: any = ['places'];
 
@@ -102,36 +103,130 @@ export default function useLocation({ onChange, onChangeCurrentLocation, setInpu
     }
   };
 
-  const getCurrentLocation = () => {
+  // const getCurrentLocation = () => {
+  //   if (navigator?.geolocation) {
+  //     navigator?.geolocation.getCurrentPosition(
+  //       async (position) => {
+          
+  //         const { latitude, longitude } = position.coords;
+  //         console.log('const { latitude, longitude }',latitude,longitude)
+  //         const geocoder = new google.maps.Geocoder();
+  //         const latlng = { lat: latitude, lng: longitude };
+
+  //         geocoder.geocode({ location: latlng }, (results, status) => {
+  //           if (status === "OK" && results?.[0]) {
+  //             const location = getLocation(results?.[0]);
+  //             onChangeCurrentLocation?.(location)
+  //           }
+  //         });
+  //       },
+  //       (error) => {
+  //         console.error("Error getting current location:", error);
+  //       }
+  //     );
+  //   } else {
+  //     console.error("Geolocation is not supported by this browser.");
+  //   }
+  // };
+
+  const getCurrentLocation = async () => {
+    try {
+      // Check if browser supports Permissions API
+      if (navigator?.permissions) {
+        const permissionStatus = await navigator.permissions.query({
+          name: "geolocation",
+        });
+        console.log('console.log("Geolocation is supported.");',permissionStatus.state)
+        // Check if permission is already granted
+        if (permissionStatus.state === "granted") {
+          fetchLocation();
+        } else if (permissionStatus.state === "prompt") {
+          // Trigger geolocation request to prompt the user
+          fetchLocation();
+        } else if (permissionStatus.state === "denied") {
+          console.error("Location access denied by user.");
+          // You can notify the user and ask them to allow location access from their browser settings
+          alert(
+            "Location permission is denied. Please allow location access in your browser settings."
+          );
+        }
+  
+        // Optional: Add an event listener to watch for changes in permission status
+        permissionStatus.onchange = () => {
+          if (permissionStatus.state === "granted") {
+            fetchLocation();
+          }
+        };
+      } else {
+        // If Permissions API is not supported, fallback to using geolocation directly
+        fetchLocation();
+      }
+    } catch (error) {
+      console.error("Error checking geolocation permission:", error);
+    }
+  };
+
+  const fetchLocation = () => {
     if (navigator?.geolocation) {
-      navigator?.geolocation.getCurrentPosition(
+      navigator.geolocation.getCurrentPosition(
         async (position) => {
           const { latitude, longitude } = position.coords;
+          console.log("const { latitude, longitude }", latitude, longitude);
+  
           const geocoder = new google.maps.Geocoder();
           const latlng = { lat: latitude, lng: longitude };
-
+  
           geocoder.geocode({ location: latlng }, (results, status) => {
+            console.log('results',results,status)
             if (status === "OK" && results?.[0]) {
               const location = getLocation(results?.[0]);
-              onChangeCurrentLocation?.(location)
+              console.log('location',location,onChangeCurrentLocation)
+              // onChangeCurrentLocation?.(location);
+              if (onChangeCurrentLocation) {
+                onChangeCurrentLocation(location);
+              }
             }
           });
         },
         (error) => {
           console.error("Error getting current location:", error);
+          // Handle other geolocation errors (optional)
+          if (error.code === error.PERMISSION_DENIED) {
+            alert("Location permission was denied. Please enable it.");
+          }
         }
       );
     } else {
       console.error("Geolocation is not supported by this browser.");
     }
-  };
+  }
+
+  const fetchLocationByMarker = async (location: any) => {
+    console.log('fetchLocationByMarker=========',location)
+    const geocoder = new google.maps.Geocoder();
+    const latlng = { lat: location.lat, lng: location.lng };
+
+    geocoder.geocode({ location: latlng }, (results, status) => {
+      console.log('results',results,status)
+      if (status === "OK" && results?.[0]) {
+        const location = getLocation(results?.[0]);
+        console.log('location',location,onChangeCurrentLocation)
+        // onChangeCurrentLocation?.(location);
+        if (onChangeCurrentLocation) {
+          onChangeCurrentLocation(location);
+        }
+      }
+    });
+  }
 
   return [
     onLoad,
     onUnmount,
     onPlaceChanged,
     getCurrentLocation,
+    
     isLoaded,
     loadError && t(loadError),
+    fetchLocationByMarker,
   ];
 }

@@ -14,6 +14,7 @@ export default function Modal({
   children,
   closeButtonClass,
   className,
+  hideCloseButton = false
 }: any) {
   const cancelButtonRef = useRef(null);
   const { t } = useTranslation('common');
@@ -67,7 +68,7 @@ export default function Modal({
             leaveTo="opacity-0 scale-95"
           >
             <Dialog.Panel className="min-w-content relative inline-block max-w-full align-middle transition-all ltr:text-left rtl:text-right">
-              <button
+             {!hideCloseButton && <button
                 onClick={onClose}
                 aria-label="Close panel"
                 ref={cancelButtonRef}
@@ -80,7 +81,7 @@ export default function Modal({
               >
                 <span className="sr-only">{t('text-close')}</span>
                 <CloseIcon className="h-4 w-4" />
-              </button>
+              </button>}
               {children}
             </Dialog.Panel>
           </Transition.Child>

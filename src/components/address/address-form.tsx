@@ -106,8 +106,22 @@ export const AddressForm: React.FC<any> = ({
                       <GooglePlacesAutocomplete
                         register={register}
                         // @ts-ignore
+                        onChangeCurrentLocation={(location: any) => {
+                          onChange(location);
+                          
+                          setValue('address.country', location?.country);
+                          setValue('address.city', location?.city);
+                          setValue('address.state', location?.state);
+                          setValue('address.zip', location?.zip);
+                          setValue(
+                            'address.street_address',
+                            location?.street_address,
+                          );
+                        }}
+                        // @ts-ignore
                         onChange={(location: any) => {
                           onChange(location);
+                          
                           setValue('address.country', location?.country);
                           setValue('address.city', location?.city);
                           setValue('address.state', location?.state);
