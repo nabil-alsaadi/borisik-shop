@@ -533,5 +533,6 @@
   "text-offers-title": "Offers",
   "text-already-review": "Already reviewed",
   "order-note" : "Order Note",
-  "text-no-wish-list": "wishlist is empty"
+  "text-no-wish-list": "wishlist is empty",
+  "text-publications" : "Publications"
 }

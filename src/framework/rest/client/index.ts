@@ -97,6 +97,7 @@ import type {
   RefundPolicyQueryOptions,
   SingleFlashSale,
   FlashSaleProductsQueryOptions,
+  PublicationPaginator,
 } from '@/types';
 import { API_ENDPOINTS } from './api-endpoints';
 import { HttpClient } from './http-client';
@@ -283,6 +284,21 @@ class Client {
       HttpClient.get<Author>(`${API_ENDPOINTS.AUTHORS}/${slug}`, {
         language,
       }),
+  };
+  publications = {
+    all: ({ name, ...params }: Partial<AuthorQueryOptions>) => {
+      return HttpClient.get<PublicationPaginator>(API_ENDPOINTS.PUBLICATIONS, {
+        ...params,
+        searchJoin: 'and',
+        search: HttpClient.formatSearchParams({
+          name,
+        }),
+      });
+    },
+    // get: ({ slug, language }: { slug: string; language?: string }) =>
+    //   HttpClient.get<Author>(`${API_ENDPOINTS.AUTHORS}/${slug}`, {
+    //     language,
+    //   }),
   };
   manufacturers = {
     all: ({ name, type, ...params }: Partial<ManufacturerQueryOptions>) =>

@@ -89,6 +89,10 @@ const ReviewPopupModal = dynamic(() => import('@/components/review-popup'), {
   ssr: false,
 });
 
+const PuplicationModal = dynamic(() => import('@/components/publication-details'), {
+  ssr: false,
+});
+
 const ManagedModal = () => {
   const { isOpen, view, data } = useModalState();
   const { closeModal } = useModalAction();
@@ -150,6 +154,7 @@ const ManagedModal = () => {
       {view === 'GATEWAY_MODAL' && <GateWayControlModal />}
       {view === 'STRIPE_ELEMENT_MODAL' && <StripeElementModal />}
       {view === 'NEWSLETTER_MODAL' && <NewsLetterModal />}
+      {view === 'PUPLICATION_MODAL' && <PuplicationModal />}
     </Modal>
   );
 };

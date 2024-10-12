@@ -105,10 +105,12 @@ export const siteSettings = {
     // { href: Routes.shops, icon: null, label: 'nav-menu-shops' },
     // { href: Routes.coupons, icon: null, label: 'nav-menu-offer' },
     { href: Routes.home, label: 'text-home' },
-    { href: Routes.contactUs, label: 'nav-menu-contact' },
+   
     // { href: Routes.flashSale, label: 'nav-menu-flash-sale' },
     // { href: Routes.manufacturers, label: 'text-manufacturers' },
     // { href: Routes.authors, label: 'text-authors' },
+    { href: Routes.publications, label: 'text-publications' },
+    { href: Routes.contactUs, label: 'nav-menu-contact' },
     { href: Routes.help, label: 'nav-menu-faq' },
     { href: Routes.terms, label: 'nav-menu-terms' },
     { href: Routes.customerRefundPolicies, label: 'nav-menu-refund-policy' },

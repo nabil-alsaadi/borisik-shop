@@ -10,6 +10,7 @@ export const API_ENDPOINTS = {
   TAGS: '/tags',
   SHOPS: '/shops',
   AUTHORS: '/authors',
+  PUBLICATIONS: '/publications',
   AUTHORS_TOP: '/top-authors',
   MANUFACTURERS: '/manufacturers',
   MANUFACTURERS_TOP: '/top-manufacturers',

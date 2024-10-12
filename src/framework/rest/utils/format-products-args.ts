@@ -53,3 +53,23 @@ export function applyOrderTranslations(order: Order, language: string = "en"): a
     ),  // Create a new products array with translated products
   };
 }
+
+export function applyPublicationTranslations(publication: any, language: string = "en"): any {
+  if (!publication) return null;
+  const translations = publication?.translations || {};
+
+  // Try to get the translation for the provided language
+  const translation = translations[language];
+  console.log('translation==========',publication,translation,translations,translations?.['en']?.title)
+  // Validate if the translation exists for the specified language
+  if (translation) {
+      publication.title = translation.title || translations['en']?.title || defaultTranslateValue;
+      publication.description = translation.description || translations['en']?.description || defaultTranslateValue;
+  } else {
+      // Fallback to English translation or default if English doesn't exist
+      publication.title = translations?.['en']?.title || defaultTranslateValue;
+      publication.description = translations?.['en']?.description || defaultTranslateValue;
+  }
+
+  return publication;
+}

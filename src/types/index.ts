@@ -372,6 +372,20 @@ export interface Author {
   slug: string;
 }
 
+export interface Publication {
+  id: string;
+  title: string;
+  description: string;
+  image?: Attachment;
+  translations?: {
+      [languageCode: string]: {
+          name: string;
+          description?: string;
+      };
+  };
+  created_at: Date;
+}
+
 export interface Manufacturer {
   id: string;
   name: string;
@@ -1059,6 +1073,8 @@ export interface CategoryPaginator extends PaginatorInfo<Category> {}
 export interface ShopPaginator extends PaginatorInfo<Shop> {}
 
 export interface AuthorPaginator extends PaginatorInfo<Author> {}
+
+export interface PublicationPaginator extends PaginatorInfo<Publication> {}
 
 export interface ManufacturerPaginator extends PaginatorInfo<Manufacturer> {}
 
