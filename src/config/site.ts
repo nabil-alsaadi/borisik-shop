@@ -2,11 +2,11 @@ import { Routes } from '@/config/routes';
 import { PaymentGateway } from '@/types';
 
 export const siteSettings = {
-  name: 'PickBazar',
+  name: 'Borisik',
   description: '',
   logo: {
     url: '/logo.svg',
-    alt: 'PickBazar',
+    alt: 'Borisik',
     href: '/grocery',
     width: 128,
     height: 40,
@@ -109,6 +109,8 @@ export const siteSettings = {
     // { href: Routes.flashSale, label: 'nav-menu-flash-sale' },
     // { href: Routes.manufacturers, label: 'text-manufacturers' },
     // { href: Routes.authors, label: 'text-authors' },
+    { href: Routes.about, label: 'text-about-us' },
+    { href: Routes.vacancies, label: 'text-vacancies' },
     { href: Routes.publications, label: 'text-publications' },
     { href: Routes.contactUs, label: 'nav-menu-contact' },
     { href: Routes.help, label: 'nav-menu-faq' },

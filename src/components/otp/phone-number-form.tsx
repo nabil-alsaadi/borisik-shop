@@ -14,7 +14,7 @@ const checkoutContactSchema = yup.object().shape({
   phone_number: yup
     .string()
     .required('error-contact-required')
-    .matches(/^9715[0-9]{8}$/, 'Invalid phone number'),
+    .matches(/^9715[0-9]{8}$/, 'error-invalid-phone-number'),
 });
 
 interface PhoneNumberFormProps {

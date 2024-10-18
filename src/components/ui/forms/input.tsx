@@ -12,6 +12,7 @@ export interface Props extends InputHTMLAttributes<HTMLInputElement> {
   shadow?: boolean;
   variant?: 'normal' | 'solid' | 'outline' | 'line';
   dimension?: 'small' | 'medium' | 'big';
+  required?: boolean;
 }
 
 const variantClasses = {
@@ -43,6 +44,7 @@ const Input = React.forwardRef<HTMLInputElement, Props>(
       disabled = false,
       type = 'text',
       inputClassName,
+      required = false,
       ...rest
     },
     ref,
@@ -55,6 +57,7 @@ const Input = React.forwardRef<HTMLInputElement, Props>(
             className="mb-3 block text-sm font-semibold leading-none text-body-dark"
           >
             {label}
+            {required && <span className="text-red-500"> *</span>}
           </label>
         )}
         <input

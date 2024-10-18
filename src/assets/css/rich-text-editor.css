@@ -211,3 +211,11 @@
 .react-editor-description .ql-align-right img {
   @apply ml-auto;
 }
+
+.react-editor-description iframe {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  max-width: 100%;
+  border: none;
+}

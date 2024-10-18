@@ -45,5 +45,7 @@ export const Routes = {
   reports: '/reports',
   flashSaleSingle: (slug: string) => `/flash-sales/${encodeURIComponent(slug)}`,
   flashSale: '/flash-sales',
-  publications: '/publications'
+  publications: '/publications',
+  about: '/about',
+  vacancies: '/vacancies'
 };

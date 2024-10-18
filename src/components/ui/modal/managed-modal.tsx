@@ -93,6 +93,10 @@ const PuplicationModal = dynamic(() => import('@/components/publication-details'
   ssr: false,
 });
 
+const VacancyModal = dynamic(() => import('@/components/vacancies/apply-form'), {
+  ssr: false,
+});
+
 const ManagedModal = () => {
   const { isOpen, view, data } = useModalState();
   const { closeModal } = useModalAction();
@@ -155,6 +159,7 @@ const ManagedModal = () => {
       {view === 'STRIPE_ELEMENT_MODAL' && <StripeElementModal />}
       {view === 'NEWSLETTER_MODAL' && <NewsLetterModal />}
       {view === 'PUPLICATION_MODAL' && <PuplicationModal />}
+      {view === 'VACANCY_MODAL' && <VacancyModal />}
     </Modal>
   );
 };

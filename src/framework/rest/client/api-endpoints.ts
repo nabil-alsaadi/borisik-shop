@@ -62,4 +62,6 @@ export const API_ENDPOINTS = {
   PRODUCT_FLASH_SALE_INFO: 'product-flash-sale-info',
   REFUND_POLICIES: 'refund-policies',
   PRODUCTS_BY_FLASH_SALE: 'products-by-flash-sale',
+  VACANCIES: '/vacancies',
+  APPLY: '/applications',
 };

@@ -386,6 +386,22 @@ export interface Publication {
   created_at: Date;
 }
 
+export interface Vacancy {
+  id: string;
+  title: string;
+  description: string;
+  requirements: string[];
+  location: string;
+  translations?: {
+      [languageCode: string]: {
+          title: string;
+          description?: string;
+          requirements: string[];
+      };
+  };
+  created_at: Date;
+}
+
 export interface Manufacturer {
   id: string;
   name: string;
@@ -734,6 +750,22 @@ export interface RegisterUserInput {
   password: string;
 }
 
+export interface VacancyInput {
+  name: string;
+  email: string;
+  phone: string;
+  resume: Attachment;      // The resume file
+  coverLetter?: string;    // Optional cover letter
+  maritalStatus: any;   // Marital status (e.g., single, married, divorced)
+  education: any;       // Education level (e.g., high_school, bachelors, masters)
+  citizenship: string;     // Citizenship status
+  employmentRecordBook: any;  // Yes/No for employment record book
+  medicalBook: any;     // Yes/No for medical book
+  smoking: any;         // Yes/No for smoking
+  alcoholConsumption: any; // Yes/No for alcohol consumption
+  emergencyPhone: string;  // Emergency phone number for relatives
+}
+
 export interface ForgotPasswordUserInput {
   email: string;
 }
@@ -1075,6 +1107,8 @@ export interface ShopPaginator extends PaginatorInfo<Shop> {}
 export interface AuthorPaginator extends PaginatorInfo<Author> {}
 
 export interface PublicationPaginator extends PaginatorInfo<Publication> {}
+
+export interface VacancyPaginator extends PaginatorInfo<Vacancy> {}
 
 export interface ManufacturerPaginator extends PaginatorInfo<Manufacturer> {}
 

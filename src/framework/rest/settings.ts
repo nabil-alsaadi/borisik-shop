@@ -14,6 +14,7 @@ import { setMaintenanceDetails } from './utils/maintenance-utils';
 import { QUERY_CLIENT_OPTIONS } from './utils/constants';
 
 export function useSettings() {
+  // console.log('use settings trigered =-=-=-=-=-=-=-=---=-=-=--=')
   const { locale } = useRouter();
 
   const formattedOptions = {
@@ -39,12 +40,16 @@ export function useSettings() {
   };
 }
 
-export const useUploads = ({ onChange, defaultFiles }: any) => {
+export const useUploads = ({ onChange, defaultFiles,fileCategory }: any) => {
   const [files, setFiles] = useState<FileWithPath[]>(
     getPreviewImage(defaultFiles)
   );
 
-  const { mutate: upload, isLoading } = useMutation(client.settings.upload, {
+  const uploadWithCategory = (input: File[]) => {
+    return client.settings.upload(input, fileCategory);
+  };
+
+  const { mutate: upload, isLoading } = useMutation(uploadWithCategory, {
     onSuccess: (data) => {
       if (onChange) {
         const dataAfterRemoveTypename = data?.map(

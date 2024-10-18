@@ -98,11 +98,14 @@ import type {
   SingleFlashSale,
   FlashSaleProductsQueryOptions,
   PublicationPaginator,
+  VacancyPaginator,
+  Vacancy,
 } from '@/types';
 import { API_ENDPOINTS } from './api-endpoints';
 import { HttpClient } from './http-client';
 //@ts-ignore
 import { OTPVerifyResponse } from '@/types';
+import { FileCategory } from '@/components/ui/forms/file-input';
 
 class Client {
   products = {
@@ -300,6 +303,23 @@ class Client {
     //     language,
     //   }),
   };
+  vacancies = {
+    all: ({ name, ...params }: Partial<AuthorQueryOptions>) => {
+      return HttpClient.get<Vacancy[]>(API_ENDPOINTS.VACANCIES, {
+        ...params,
+        searchJoin: 'and',
+        search: HttpClient.formatSearchParams({
+          name,
+        }),
+      });
+    },
+    apply: (input: any) =>
+      HttpClient.post<any>(`${API_ENDPOINTS.APPLY}`, input),
+    get: ({ id, language }: { id: string; language?: string }) =>
+      HttpClient.get<Author>(`${API_ENDPOINTS.APPLY}/${id}`, {
+        language,
+      }),
+  };
   manufacturers = {
     all: ({ name, type, ...params }: Partial<ManufacturerQueryOptions>) =>
       HttpClient.get<ManufacturerPaginator>(API_ENDPOINTS.MANUFACTURERS, {
@@ -479,12 +499,13 @@ class Client {
   settings = {
     all: (params?: SettingsQueryOptions) =>
       HttpClient.get<Settings>(API_ENDPOINTS.SETTINGS, { ...params }),
-    upload: (input: File[]) => {
+    upload: (input: File[],fileCategory: FileCategory) => {
       let formData = new FormData();
       input.forEach((attachment) => {
         formData.append('attachment[]', attachment);
       });
-      return HttpClient.post<Attachment[]>(API_ENDPOINTS.UPLOADS, formData, {
+      formData.append('file_category',fileCategory)
+      return HttpClient.post<any>(API_ENDPOINTS.UPLOADS, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

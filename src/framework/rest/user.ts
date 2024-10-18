@@ -182,6 +182,7 @@ export function useLogin() {
 
   const { mutate, isLoading } = useMutation(client.users.login, {
     onSuccess: (data) => {
+      // console.log('sucess login--------------------')
       if (!data.token) {
         setServerError('error-credential-wrong');
         return;
@@ -189,11 +190,12 @@ export function useLogin() {
       setToken(data.token);
       setAuthCredentials(data.token, data.permissions);
       setAuthorized(true);
-      setAuthorized;
       closeModal();
     },
     onError: (error: Error) => {
-      setServerError('error-credential-wrong');
+      // console.log('error login--------------------',error,getFormErrors(error))
+      
+      setServerError(getFormErrors(error) ?? 'error-credential-wrong');
       console.log(error.message);
     },
   });

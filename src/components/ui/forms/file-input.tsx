@@ -5,16 +5,29 @@ interface FileInputProps {
   control: any;
   name: string;
   multiple?: boolean;
+  type?: 'image' | 'file';
+  error?: string;
+  fileCategory?: FileCategory
 }
 
-const FileInput = ({ control, name, multiple }: FileInputProps) => {
+export enum FileCategory {
+  attachments = 'attachments',
+  resumes = 'resumes',
+
+}
+
+const FileInput = ({ control, name, multiple, type, error,fileCategory }: FileInputProps) => {
   return (
     <Controller
       control={control}
       name={name}
       defaultValue={[]}
       render={({ field: { ref, ...rest } }) => (
-        <Uploader {...rest} multiple={multiple} />
+        <>
+          <Uploader {...rest} multiple={multiple} type={type} fileCategory={fileCategory} />
+          {error && <p className="mt-2 text-xs text-red-500">{error}</p>}
+        </>
+        
       )}
     />
   );
