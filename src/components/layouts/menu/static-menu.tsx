@@ -8,7 +8,7 @@ const StaticMenu = () => {
   const { headerLinks } = siteSettings;
   return (
     <>
-      {headerLinks?.slice(0, 3)?.map(({ href, label, icon }) => (
+      {headerLinks?.slice(0, 4)?.map(({ href, label, icon }) => (
         <li key={`${href}${label}`}>
           <Link
             href={href}
@@ -28,7 +28,7 @@ const StaticMenu = () => {
         </div>
         <ul className="shadow-dropDown invisible absolute top-full z-30 w-[220px] rounded-md bg-light py-4 opacity-0 shadow transition-all duration-300 group-hover:visible group-hover:opacity-100 ltr:left-0 rtl:right-0 xl:w-[240px]">
           {headerLinks
-            ?.slice(3, headerLinks?.length)
+            ?.slice(4, headerLinks?.length)
             ?.map(({ href, label }, index) => (
               <li
                 className="menu-child-item font-chivo hover:filter-green group py-[10px] px-[22px] transition-all duration-200 hover:pl-[25px] hover:opacity-100"

@@ -64,4 +64,5 @@ export const API_ENDPOINTS = {
   PRODUCTS_BY_FLASH_SALE: 'products-by-flash-sale',
   VACANCIES: '/vacancies',
   APPLY: '/applications',
+  MAP_REVIEWS: 'reviews',
 };

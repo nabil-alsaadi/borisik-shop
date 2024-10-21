@@ -1080,6 +1080,25 @@ export interface FlashSale {
   products?: Product[];
 }
 
+export interface ReviewMapQueryOptions extends QueryOptions {
+  placeId: string
+}
+export interface ReviewsOutput {
+  name: string;
+  rating: number;
+  user_ratings_total: number;
+  reviews: MapReview[];
+}
+
+export interface MapReview {
+  author_name: string;
+  time: number;
+  rating: number;
+  text: string;
+  profile_photo_url: string;
+  relative_time_description: string;
+}
+
 export interface SingleFlashSale {
   flash_sale: FlashSale;
   products: ProductPaginator;

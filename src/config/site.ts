@@ -112,6 +112,7 @@ export const siteSettings = {
     { href: Routes.about, label: 'text-about-us' },
     { href: Routes.vacancies, label: 'text-vacancies' },
     { href: Routes.publications, label: 'text-publications' },
+    { href: Routes.reviews, label: 'text-reviews' },
     { href: Routes.contactUs, label: 'nav-menu-contact' },
     { href: Routes.help, label: 'nav-menu-faq' },
     { href: Routes.terms, label: 'nav-menu-terms' },

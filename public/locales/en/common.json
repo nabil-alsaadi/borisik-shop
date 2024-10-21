@@ -405,9 +405,9 @@
   "text-page": "Page",
   "text-pages": "Pages",
   "text-ratings-reviews": "Ratings & Reviews of",
-  "text-ratings": "ratings",
+  "text-ratings": "Ratings",
   "text-and": "and",
-  "text-reviews": "reviews",
+  "text-reviews": "Reviews",
   "text-question-answers": "Questions and Answers",
   "text-question-search-placeholder": "Have a question? Search for answers.",
   "text-ask-question": "Ask seller a question",
@@ -578,6 +578,8 @@
   "error-smoking-required": "Smoking information is required",
   "error-alcohol-consumption-required": "Alcohol consumption information is required",
   "error-emergency-phone-required": "Emergency phone number is required",
-  "text-sometimes": "Sometimes"
+  "text-sometimes": "Sometimes",
+  "provide-feedback": "Provide Feedback",
+  "show-more-google-maps" : "Show More Reviews on Google Maps"
 
 }

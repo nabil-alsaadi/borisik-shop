@@ -47,5 +47,6 @@ export const Routes = {
   flashSale: '/flash-sales',
   publications: '/publications',
   about: '/about',
-  vacancies: '/vacancies'
+  vacancies: '/vacancies',
+  reviews: '/reviews'
 };

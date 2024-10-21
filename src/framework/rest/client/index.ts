@@ -100,6 +100,7 @@ import type {
   PublicationPaginator,
   VacancyPaginator,
   Vacancy,
+  ReviewsOutput,
 } from '@/types';
 import { API_ENDPOINTS } from './api-endpoints';
 import { HttpClient } from './http-client';
@@ -216,6 +217,12 @@ class Client {
         `${API_ENDPOINTS.PRODUCTS_REVIEWS}/${input.id}`,
         input,
       ),
+  };
+  mapReviews = {
+    get: ({...params}) =>
+      HttpClient.get<ReviewsOutput>(`${API_ENDPOINTS.MAP_REVIEWS}`,{
+        ...params,
+      })
   };
   categories = {
     all: ({ type, ...params }: Partial<CategoryQueryOptions>) =>

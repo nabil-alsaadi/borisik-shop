@@ -88,7 +88,7 @@ export const VacanciesPage = () => {
 
                     <h4 className="font-semibold text-gray-700">{t('requirements')}:</h4>
                     <ul className="list-disc list-inside text-gray-600 mb-4">
-                      {vacancy.requirements.map((requirement, index) => (
+                      {vacancy.requirements.map((requirement:string, index: number) => (
                         <li key={index}>{requirement}</li>
                       ))}
                     </ul>
