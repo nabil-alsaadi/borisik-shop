@@ -23,7 +23,7 @@ const RazorpayPaymentModal: React.FC<Props> = ({
   const { closeModal } = useModalAction();
   const { loadRazorpayScript, checkScriptLoaded } = useRazorpay();
   const { settings, isLoading: isSettingsLoading } = useSettings();
-  const { order, isLoading, refetch } = useOrder({
+  const { order, isLoading } = useOrder({
     tracking_number: trackingNumber,
   });
   const { createOrderPayment } = useOrderPayment();
@@ -62,7 +62,7 @@ const RazorpayPaymentModal: React.FC<Props> = ({
       modal: {
         ondismiss: async () => {
           closeModal();
-          await refetch();
+          // await refetch();
         },
       },
     };

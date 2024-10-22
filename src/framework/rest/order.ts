@@ -28,73 +28,224 @@ import { Routes } from '@/config/routes';
 import { mapPaginatorData } from '@/framework/utils/data-mappers';
 import { isArray, isObject, isEmpty } from 'lodash';
 import { applyOrderTranslations } from './utils/format-products-args';
+import { useEffect, useState } from 'react';
 
-export function useOrders(options?: Partial<OrderQueryOptions>) {
+import { collection, doc, limit, onSnapshot, orderBy, query, startAfter, where } from 'firebase/firestore';
+import { firestore } from '../../../firebaseConfig';
+
+// export function useOrders(options?: Partial<OrderQueryOptions>) {
+//   const { locale } = useRouter();
+
+//   const formattedOptions = {
+//     ...options,
+//     language: locale
+//   };
+
+//   const {
+//     data,
+//     isLoading,
+//     error,
+//     fetchNextPage,
+//     hasNextPage,
+//     isFetching,
+//     isFetchingNextPage,
+//   } = useInfiniteQuery<OrderPaginator, Error>(
+//     [API_ENDPOINTS.ORDERS, formattedOptions],
+//     ({ queryKey, pageParam }) =>
+//       client.orders.all(Object.assign({}, queryKey[1], pageParam)),
+//     {
+//       getNextPageParam: ({ current_page, last_page }) =>
+//         last_page > current_page && { page: current_page + 1 },
+//       refetchOnWindowFocus: false,
+//     }
+//   );
+
+//   function handleLoadMore() {
+//     fetchNextPage();
+//   }
+//   const orders = data?.pages?.flatMap((page) => page.data) ?? []
+//   const orderTranlated = orders.map((order) => applyOrderTranslations(order,locale ?? 'en'))
+//   console.log('orders',data)
+//   return {
+//     orders: orderTranlated,
+//     paginatorInfo: Array.isArray(data?.pages)
+//       ? mapPaginatorData(data?.pages[data.pages.length - 1])
+//       : null,
+//     isLoading,
+//     error,
+//     isFetching,
+//     isLoadingMore: isFetchingNextPage,
+//     loadMore: handleLoadMore,
+//     hasMore: Boolean(hasNextPage),
+//   };
+// }
+
+const PAGE_LIMIT = 15; // Set your pagination limit
+
+export function useOrders() {
   const { locale } = useRouter();
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [lastDoc, setLastDoc] = useState<null | any>(null); // Keep track of the last document for pagination
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isFetching, setIsFetching] = useState<boolean>(false); // General fetching state
+  const [isLoadingMore, setIsLoadingMore] = useState<boolean>(false); // Pagination loading state
+  const [hasMore, setHasMore] = useState<boolean>(true); // Pagination state
+  const [error, setError] = useState<Error | null>(null);
 
-  const formattedOptions = {
-    ...options,
-    language: locale
+  useEffect(() => {
+    // Initial query to fetch the first page of orders, ordered by 'created_at' descending (newest first)
+    const orderCollection = collection(firestore, 'orders');
+    const initialQuery = query(orderCollection, orderBy('created_at', 'desc'), limit(PAGE_LIMIT));
+
+    setIsFetching(true);
+    const unsubscribe = onSnapshot(
+      initialQuery,
+      (snapshot) => {
+        if (!snapshot.empty) {
+          const newOrders = snapshot.docs.map((doc) => ({
+            ...doc.data(),
+            id: doc.id,
+          })) as Order[];
+          setOrders(newOrders);
+          setLastDoc(snapshot.docs[snapshot.docs.length - 1]); // Set the last document for pagination
+          setHasMore(snapshot.docs.length === PAGE_LIMIT); // Check if there are more documents to fetch
+        } else {
+          setOrders([]);
+          setHasMore(false);
+        }
+        setIsLoading(false);
+        setIsFetching(false);
+      },
+      (err) => {
+        setError(err);
+        setIsLoading(false);
+        setIsFetching(false);
+      }
+    );
+
+    return () => unsubscribe();
+  }, [locale]); // Re-run the listener when the locale changes
+
+  // Function to load more orders (for pagination)
+  const loadMoreOrders = () => {
+    if (!lastDoc || !hasMore || isLoadingMore) return;
+
+    setIsLoadingMore(true); // Indicate pagination is happening
+
+    const orderCollection = collection(firestore, 'orders');
+    const nextQuery = query(
+      orderCollection,
+      orderBy('created_at', 'desc'),
+      startAfter(lastDoc),
+      limit(PAGE_LIMIT)
+    );
+
+    onSnapshot(
+      nextQuery,
+      (snapshot) => {
+        if (!snapshot.empty) {
+          const newOrders = snapshot.docs.map((doc) => ({
+            ...doc.data(),
+            id: doc.id,
+          })) as Order[];
+          setOrders((prevOrders) => [...prevOrders, ...newOrders]);
+          setLastDoc(snapshot.docs[snapshot.docs.length - 1]); // Set the last document for pagination
+          setHasMore(snapshot.docs.length === PAGE_LIMIT); // Check if more documents are available
+        } else {
+          setHasMore(false);
+        }
+        setIsLoadingMore(false); // Done loading more orders
+      },
+      (err) => {
+        setError(err);
+        setIsLoadingMore(false); // Error handling
+      }
+    );
   };
 
-  const {
-    data,
-    isLoading,
-    error,
-    fetchNextPage,
-    hasNextPage,
-    isFetching,
-    isFetchingNextPage,
-  } = useInfiniteQuery<OrderPaginator, Error>(
-    [API_ENDPOINTS.ORDERS, formattedOptions],
-    ({ queryKey, pageParam }) =>
-      client.orders.all(Object.assign({}, queryKey[1], pageParam)),
-    {
-      getNextPageParam: ({ current_page, last_page }) =>
-        last_page > current_page && { page: current_page + 1 },
-      refetchOnWindowFocus: false,
-    }
+  const orderTranslated = orders.map((order) =>
+    applyOrderTranslations(order, locale ?? 'en')
   );
 
-  function handleLoadMore() {
-    fetchNextPage();
-  }
-  const orders = data?.pages?.flatMap((page) => page.data) ?? []
-  const orderTranlated = orders.map((order) => applyOrderTranslations(order,locale ?? 'en'))
-  console.log('orders',data)
   return {
-    orders: orderTranlated,
-    paginatorInfo: Array.isArray(data?.pages)
-      ? mapPaginatorData(data?.pages[data.pages.length - 1])
-      : null,
+    orders: orderTranslated,
     isLoading,
     error,
     isFetching,
-    isLoadingMore: isFetchingNextPage,
-    loadMore: handleLoadMore,
-    hasMore: Boolean(hasNextPage),
+    isLoadingMore, // Now included in the returned values
+    loadMore: loadMoreOrders,
+    hasMore,
   };
 }
+
+
+// export function useOrder({ tracking_number }: { tracking_number: string }) {
+//   const { locale } = useRouter();
+//   const { data, isLoading, error, isFetching, refetch } = useQuery<
+//     Order,
+//     Error
+//   >(
+//     [API_ENDPOINTS.ORDERS, tracking_number, locale],
+//     () => client.orders.get(tracking_number,{ language: locale }),
+//     { refetchOnWindowFocus: false }
+//   );
+
+//   return {
+//     order: data ? applyOrderTranslations(data,locale) : data,
+//     isFetching,
+//     isLoading,
+//     refetch,
+//     error,
+//   };
+// }
 
 export function useOrder({ tracking_number }: { tracking_number: string }) {
   const { locale } = useRouter();
-  const { data, isLoading, error, isFetching, refetch } = useQuery<
-    Order,
-    Error
-  >(
-    [API_ENDPOINTS.ORDERS, tracking_number, locale],
-    () => client.orders.get(tracking_number,{ language: locale }),
-    { refetchOnWindowFocus: false }
-  );
+  const [order, setOrder] = useState<Order | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<Error | null>(null);
+
+  useEffect(() => {
+    if (!tracking_number) return;
+
+    // Define the query to find the document by the tracking_number field
+    const ordersCollection = collection(firestore, 'orders');
+    const orderQuery = query(ordersCollection, where('tracking_number', '==', tracking_number));
+
+    // Listen for real-time updates using onSnapshot
+    const unsubscribe = onSnapshot(
+      orderQuery,
+      (snapshot) => {
+        if (!snapshot.empty) {
+          // Get the first matching document (assuming tracking_number is unique)
+          const doc = snapshot.docs[0];
+          const data = doc.data() as Order;
+          setOrder({
+            ...applyOrderTranslations(data, locale),
+            id: doc.id, // Add the document id to the order data
+          });
+        } else {
+          setOrder(null);
+        }
+        setIsLoading(false);
+      },
+      (err) => {
+        setError(err);
+        setIsLoading(false);
+      }
+    );
+
+    // Clean up listener on unmount
+    return () => unsubscribe();
+  }, [tracking_number, locale]);
 
   return {
-    order: data ? applyOrderTranslations(data,locale) : data,
-    isFetching,
+    order,
     isLoading,
-    refetch,
     error,
   };
 }
+
 
 export function useRefunds(options: Pick<QueryOptions, 'limit'>) {
   const { locale } = useRouter();

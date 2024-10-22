@@ -75,10 +75,10 @@ const PaymentForm: React.FC<Props> = ({
                 }
               );
               // Send card response to the api\
-              await createOrderPayment({
-                tracking_number: trackingNumber as string,
-                payment_gateway: 'stripe' as string,
-              });
+              // await createOrderPayment({
+              //   tracking_number: trackingNumber as string,
+              //   payment_gateway: 'stripe' as string,
+              // });
               if (confirmCardPayment?.paymentIntent?.status === 'succeeded') {
                 //@ts-ignore
                 toast.success(t('payment-successful'));
@@ -102,10 +102,10 @@ const PaymentForm: React.FC<Props> = ({
         }
       );
       // Send card response to the api
-      await createOrderPayment({
-        tracking_number: trackingNumber,
-        payment_gateway: 'stripe' as string,
-      });
+      // await createOrderPayment({
+      //   tracking_number: trackingNumber,
+      //   payment_gateway: 'stripe' as string,
+      // });
       if (confirmCardPayment?.paymentIntent?.status === 'succeeded') {
         //@ts-ignore
         toast.success(t('payment-successful'));

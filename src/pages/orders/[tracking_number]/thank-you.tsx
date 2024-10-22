@@ -15,7 +15,7 @@ export default function OrderPage() {
   const { settings } = useSettings();
   const { query } = useRouter();
   const { t } = useTranslation();
-  const { order, isLoading, isFetching } = useOrder({
+  const { order, isLoading } = useOrder({
     tracking_number: query.tracking_number!.toString(),
   });
   const { createOrderPayment } = useOrderPayment();
@@ -48,14 +48,14 @@ export default function OrderPage() {
     }
   }, [order?.payment_status]);
 
-  useEffect(() => {
-    if (!isLoading && order?.payment_gateway.toLowerCase()) {
-      createOrderPayment({
-        tracking_number: query?.tracking_number as string,
-        payment_gateway: order?.payment_gateway.toLowerCase() as string,
-      });
-    }
-  }, [order?.payment_status]);
+  // useEffect(() => {
+  //   if (!isLoading && order?.payment_gateway.toLowerCase()) {
+  //     createOrderPayment({
+  //       tracking_number: query?.tracking_number as string,
+  //       payment_gateway: order?.payment_gateway.toLowerCase() as string,
+  //     });
+  //   }
+  // }, [order?.payment_status]);
 
   if (isLoading) {
     return <Spinner showText={false} />;
@@ -67,7 +67,7 @@ export default function OrderPage() {
       <Order
         settings={settings}
         order={order}
-        loadingStatus={!isLoading && isFetching}
+        loadingStatus={isLoading}
       />
     </>
   );

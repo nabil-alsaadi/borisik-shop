@@ -11,7 +11,7 @@ export default function OrderPage() {
   const { query } = useRouter();
   const { settings } = useSettings();
 
-  const { order, isLoading, isFetching } = useOrder({
+  const { order, isLoading } = useOrder({
     tracking_number: query.tracking_number!.toString(),
   });
 
@@ -24,7 +24,7 @@ export default function OrderPage() {
       <Seo noindex={true} nofollow={true} />
       <Order
         order={order}
-        loadingStatus={!isLoading && isFetching}
+        loadingStatus={isLoading}
         settings={settings}
       />
     </>

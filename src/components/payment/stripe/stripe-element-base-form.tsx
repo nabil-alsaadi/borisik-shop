@@ -89,10 +89,10 @@ export default function StripeElementBaseForm({
     });
 
     // Send card response to the api
-    await createOrderPayment({
-      tracking_number: trackingNumber,
-      payment_gateway: 'stripe' as string,
-    });
+    // await createOrderPayment({
+    //   tracking_number: trackingNumber,
+    //   payment_gateway: 'stripe' as string,
+    // });
 
     // This point will only be reached if there is an immediate error when
     // confirming the payment. Otherwise, your customer will be redirected to

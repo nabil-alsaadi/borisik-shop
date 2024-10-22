@@ -15,7 +15,7 @@ export default function OrderPage() {
   const { settings } = useSettings();
   const { openModal } = useModalAction();
   const { query } = useRouter();
-  const { order, isLoading, isFetching } = useOrder({
+  const { order, isLoading } = useOrder({
     tracking_number: query.tracking_number!.toString(),
   });
 
@@ -46,7 +46,7 @@ export default function OrderPage() {
       <Order
         settings={settings}
         order={order}
-        loadingStatus={!isLoading && isFetching}
+        loadingStatus={isLoading}
       />
     </>
   );

@@ -6,6 +6,7 @@ import { useModalAction } from '@/components/ui/modal/modal.context';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'next-i18next';
 import { useUser } from '@/framework/user';
+import { QUERY_CLIENT_OPTIONS } from './utils/constants';
 
 export function useCards(params?: any, options?: any) {
   const { isAuthorized } = useUser();
@@ -16,6 +17,7 @@ export function useCards(params?: any, options?: any) {
     {
       enabled: isAuthorized,
       ...options,
+      ...QUERY_CLIENT_OPTIONS
     }
   );
 
