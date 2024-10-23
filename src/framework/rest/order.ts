@@ -528,12 +528,18 @@ export function useOrderPayment() {
 }
 
 export function useSavePaymentMethod() {
+  const queryClient = useQueryClient();
   const {
     mutate: savePaymentMethod,
     isLoading,
     error,
     data,
-  } = useMutation(client.orders.savePaymentMethod);
+  } = useMutation(
+    client.orders.savePaymentMethod,
+    {
+      onSettled: (data) => {
+      queryClient.refetchQueries(API_ENDPOINTS.CARDS);
+  }});
 
   return {
     savePaymentMethod,

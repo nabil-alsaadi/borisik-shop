@@ -5,15 +5,26 @@ import { useAtom } from 'jotai';
 import { useTranslation } from 'next-i18next';
 import { useSettings } from '@/framework/settings';
 import PhoneNumberForm from '@/components/otp/phone-number-form';
+import { useUpdateUser, useUser } from '@/framework/user';
 
 export default function AddOrUpdateContact() {
   const { t } = useTranslation('common');
   const { settings } = useSettings();
   const useOtp = settings?.useOtp;
   const { closeModal } = useModalAction();
+  const { me } = useUser();
+  const { mutate: updateProfile } = useUpdateUser();
   const [contactNumber, setContactNumber] = useAtom(customerContactAtom);
 
   function onSubmit({ phone_number }: { phone_number: string }) {
+    if (!me?.profile?.contact){
+      updateProfile({
+        id: me?.id ?? '',
+        profile: {
+          contact: phone_number,
+        },
+      });
+    }
     setContactNumber(phone_number);
     closeModal();
   }
