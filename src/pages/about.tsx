@@ -45,7 +45,7 @@ export const AboutCompanyPage = () => {
                   We protect our reputation and monitor the quality of the product! Even the most sophisticated gourmet will not find any additional preservatives, dyes, and flavor enhancers in our products.
                 </p>
                 <p>
-                  Visit our "Red Caviar" stores and choose the best Russian seafood delicacies!
+                  Visit our Red Caviar stores and choose the best Russian seafood delicacies!
                 </p>
                 <p>
                   <strong>Our stores</strong> are open daily from 09:00 to 22:00.

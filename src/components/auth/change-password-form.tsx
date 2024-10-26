@@ -5,7 +5,7 @@ import { useTranslation } from 'next-i18next';
 import { Form } from '@/components/ui/forms/form';
 import { useChangePassword } from '@/framework/user';
 import * as yup from 'yup';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import Alert from '../ui/alert';
 
 export const changePasswordSchema = yup.object().shape({
@@ -27,7 +27,7 @@ export default function ChangePasswordForm() {
     success,
     setSuccess
   } = useChangePassword();
-
+  const resetFormRef = useRef<() => void | undefined>();
   function onSubmit({ newPassword, oldPassword }: ChangePasswordUserInput) {
     console.log('onSubmit')
     changePassword({
@@ -40,7 +40,12 @@ export default function ChangePasswordForm() {
   //     setSuccess(false);
   //   }
   // },[success])
-
+  useEffect(() => {
+    if (success) {
+      resetFormRef.current?.(); // Reset form fields
+      setSuccess(false); // Reset the success flag
+    }
+  }, [success, setSuccess]);
   return (
     <>
     <Alert
@@ -57,12 +62,13 @@ export default function ChangePasswordForm() {
       serverError={formError}
     >
       {({ register, formState: { errors }, reset }) => {
-        useEffect(() => {
-          if (success) {
-            reset(); // Reset form fields
-            setSuccess(false); // Reset the success flag
-          }
-        }, [success, reset, setSuccess]);
+        // useEffect(() => {
+        //   if (success) {
+        //     reset(); // Reset form fields
+        //     setSuccess(false); // Reset the success flag
+        //   }
+        // }, [success, reset, setSuccess]);
+        resetFormRef.current = reset;
         return (
         <>
           <PasswordInput
