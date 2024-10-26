@@ -64,7 +64,8 @@ export default function GooglePlacesAutocomplete({
           'geometry.location',
           'formatted_address',
         ]}
-        types={['address']}
+        // types={['address']}
+        types={['geocode', 'establishment']}
       >
         <input
           type="text"

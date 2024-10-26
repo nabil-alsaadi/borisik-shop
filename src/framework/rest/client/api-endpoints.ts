@@ -51,7 +51,7 @@ export const API_ENDPOINTS = {
   SAVE_PAYMENT_METHOD: '/save-payment-method',
   PAYMENT_INTENT: '/payment-intent',
   BEST_SELLING_PRODUCTS: '/best-selling-products',
-  SEND_VERIFICATION_EMAIL: '/email/verification-notification',
+  SEND_VERIFICATION_EMAIL: '/verification-notification',
   USERS_UPDATE_EMAIL: '/update-email',
   STORE_NOTICES: 'store-notices',
   FAQS: '/faqs',
@@ -65,4 +65,5 @@ export const API_ENDPOINTS = {
   VACANCIES: '/vacancies',
   APPLY: '/applications',
   MAP_REVIEWS: 'reviews',
+  VERIFY_EMAIL: 'verify-email'
 };

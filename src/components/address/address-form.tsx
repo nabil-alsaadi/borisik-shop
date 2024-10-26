@@ -63,7 +63,7 @@ export const AddressForm: React.FC<any> = ({
       }}
       resetValues={defaultValues}
     >
-      {({ register, control, getValues, setValue, formState: { errors } }) => {
+      {({ register, control, getValues, setValue, formState: { errors }, trigger }) => {
         return (
           <>
             {/* <div style={{display:'none'}}> for billing/ shipping
@@ -130,6 +130,7 @@ export const AddressForm: React.FC<any> = ({
                             'address.street_address',
                             location?.street_address,
                           );
+                          trigger(['address.country', 'address.city', 'address.state', 'address.zip', 'address.street_address']);
                         }}
                         data={getValues('location')!}
                       />

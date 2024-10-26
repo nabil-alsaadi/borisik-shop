@@ -67,14 +67,14 @@ const VerifyEmail = () => {
               {t('auth-menu-logout')}
             </Button>
           </div>
-          <div className="mt-4">
+          {/* <div className="mt-4">
             <Link
               href={Routes.home}
               className="inline-flex items-center text-bolder underline hover:text-body-dark hover:no-underline focus:outline-none sm:text-base"
             >
               {t('404-back-home')}
             </Link>
-          </div>
+          </div> */}
         </Card>
       </div>
     </section>

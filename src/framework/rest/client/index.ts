@@ -482,6 +482,12 @@ class Client {
         {},
       );
     },
+    verifyEmail: (input: {token: string}) => {
+      return HttpClient.get<VerificationEmailUserInput>(
+        API_ENDPOINTS.VERIFY_EMAIL,
+        input,
+      );
+    },
   };
   wishlist = {
     all: (params: WishlistQueryOptions) =>

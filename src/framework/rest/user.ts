@@ -339,13 +339,17 @@ export function useRegister() {
   let [formError, setFormError] = useState<Partial<RegisterUserInput> | null>(
     null,
   );
-
+  const { setEmailVerified } = useToken();
+  const router = useRouter();
+  
   const { mutate, isLoading } = useMutation(client.users.register, {
     onSuccess: (data) => {
       if (data?.token && data?.permissions?.length) {
         setToken(data?.token);
         setAuthorized(true);
         closeModal();
+        setEmailVerified(false);
+        router.push(Routes.verifyEmail);
         return;
       }
       if (!data.token) {
@@ -366,6 +370,7 @@ export function useRegister() {
 
   return { mutate, isLoading, formError, setFormError };
 }
+
 export function useResendVerificationEmail() {
   const { t } = useTranslation('common');
   const { mutate, isLoading } = useMutation(
@@ -388,6 +393,34 @@ export function useResendVerificationEmail() {
 
   return { mutate, isLoading };
 }
+
+export function useVerifyEmail() {
+  const { t } = useTranslation('common');
+  const { setEmailVerified } = useToken();
+  const router = useRouter();
+  const { mutate, isLoading } = useMutation(
+    client.users.verifyEmail,
+    {
+      onSuccess: (data) => {
+        if (data) {
+          toast.success(t('text-email-verified'));
+          setEmailVerified(true)
+          router.push('/');
+        }
+      },
+      onError: (error) => {
+        const {
+          response: { data },
+        }: any = error ?? {};
+
+        toast.error(data?.message);
+      },
+    },
+  );
+
+  return { mutate, isLoading };
+}
+
 export function useLogout() {
   const queryClient = useQueryClient();
   const { removeToken } = useToken();
@@ -460,6 +493,7 @@ export function useForgotPassword() {
   const { mutate, isLoading } = useMutation(client.users.forgotPassword, {
     onSuccess: (data, variables) => {
       if (!data.success) {
+        console.log('data',data)
         setFormError({
           email: data?.message ?? '',
         });
@@ -470,6 +504,13 @@ export function useForgotPassword() {
         email: variables.email,
         step: 'Token',
       });
+    },
+    onError: (error) => {
+      
+      const {
+        response: { data },
+      }: any = error ?? {};
+      toast.error(data?.message ?? '');
     },
   });
 
@@ -494,6 +535,13 @@ export function useResetPassword() {
     },
     onSettled: () => {
       queryClient.clear();
+    },
+    onError: (error) => {
+      
+      const {
+        response: { data },
+      }: any = error ?? {};
+      toast.error(data?.message ?? '');
     },
   });
 }
@@ -520,6 +568,13 @@ export function useVerifyForgotPasswordToken() {
       },
       onSettled: () => {
         queryClient.clear();
+      },
+      onError: (error) => {
+      
+        const {
+          response: { data },
+        }: any = error ?? {};
+        toast.error(data?.message ?? '');
       },
     }
   );

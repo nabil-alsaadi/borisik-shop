@@ -22,7 +22,7 @@ module.exports = withPWA({
       'storage.googleapis.com'
     ],
   },
-  ...(process.env.APPLICATION_MODE === 'production' && {
+  ...(process.env.NEXT_PUBLIC_APPLICATION_MODE === 'production' && {
     typescript: {
       ignoreBuildErrors: true,
     },

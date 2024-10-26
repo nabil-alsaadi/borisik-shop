@@ -6,7 +6,8 @@ import { Stripe, loadStripe } from '@stripe/stripe-js';
 let stripePromise: Promise<Stripe | null>;
 const getStripe = () => {
   if (!stripePromise) {
-    stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
+    const key = process.env.NEXT_PUBLIC_APPLICATION_MODE === 'production' ? process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY : process.env.NEXT_PUBLIC_STRIPE_TESTING_KEY
+    stripePromise = loadStripe(key!);
   }
   return stripePromise;
 };

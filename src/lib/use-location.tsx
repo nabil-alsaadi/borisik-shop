@@ -79,6 +79,11 @@ export default function useLocation({ onChange, onChangeCurrentLocation, setInpu
   });
 
   const onLoad = useCallback((autocompleteInstance: any) => {
+
+    autocompleteInstance.setComponentRestrictions({
+      country: ['AE'], // Restrict to United States (you can add more country codes as needed)
+    });
+    autocompleteInstance.setTypes(['geocode', 'establishment']);
     setAutocomplete(autocompleteInstance);
   }, []);
 

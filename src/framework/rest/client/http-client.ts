@@ -10,6 +10,7 @@ const Axios = axios.create({
   timeout: 5000000,
   headers: {
     'Content-Type': 'application/json',
+    'x-environment': process.env.NEXT_PUBLIC_APPLICATION_MODE
   },
 });
 // Change request data/error here
@@ -21,6 +22,7 @@ Axios.interceptors.request.use((config) => {
   config.headers = {
     ...config.headers,
     Authorization: `Bearer ${token ? token : ''}`,
+    'x-environment': process.env.NEXT_PUBLIC_APPLICATION_MODE
   };
   return config;
 });
