@@ -116,11 +116,11 @@ export const siteSettings = {
     { href: Routes.contactUs, label: 'nav-menu-contact' },
     { href: Routes.help, label: 'nav-menu-faq' },
     { href: Routes.terms, label: 'nav-menu-terms' },
-    { href: Routes.customerRefundPolicies, label: 'nav-menu-refund-policy' },
-    {
-      href: Routes.vendorRefundPolicies,
-      label: 'nav-menu-vendor-refund-policy',
-    },
+    // { href: Routes.customerRefundPolicies, label: 'nav-menu-refund-policy' },
+    // {
+    //   href: Routes.vendorRefundPolicies,
+    //   label: 'nav-menu-vendor-refund-policy',
+    // },
   ],
   footer: {
     // copyright: {
@@ -159,10 +159,10 @@ export const siteSettings = {
             name: 'text-faq-help',
             href: Routes.help,
           },
-          {
-            name: 'Vendor Refund Policies',
-            href: Routes.vendorRefundPolicies,
-          },
+          // {
+          //   name: 'Vendor Refund Policies',
+          //   href: Routes.vendorRefundPolicies,
+          // },
           {
             name: 'Customer Refund Policies',
             href: Routes.customerRefundPolicies,
