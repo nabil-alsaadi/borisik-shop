@@ -580,6 +580,7 @@
   "error-emergency-phone-required": "Emergency phone number is required",
   "text-sometimes": "Sometimes",
   "provide-feedback": "Provide Feedback",
-  "show-more-google-maps" : "Show More Reviews on Google Maps"
+  "show-more-google-maps" : "Show More Reviews on Google Maps",
+  "text-email-verified" : "Email verified successfully"
 
 }

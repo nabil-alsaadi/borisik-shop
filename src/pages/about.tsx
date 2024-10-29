@@ -54,8 +54,8 @@ export const AboutCompanyPage = () => {
               <div>
                 {/* Use next/image for optimized images */}
                 <Image
-                  src="https://firebasestorage.googleapis.com/v0/b/borisik-products.appspot.com/o/attachments%2Fabout_shop.jpg?alt=media&token=3e03351d-8b56-489a-834f-86c1edf32d08" // Replace with your actual image path
-                  alt="Storefront"
+                  src="https://storage.googleapis.com/borisik-products.appspot.com/attachments/1730235951723_about_shop.jpg" // Replace with your actual image path
+                  alt=""
                   className="rounded-lg shadow-lg"
                   width={600}
                   height={400}

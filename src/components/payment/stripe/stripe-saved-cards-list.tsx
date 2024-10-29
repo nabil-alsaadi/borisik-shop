@@ -178,28 +178,70 @@ const StripeSavedCardsList = ({
   ];
   return (
     <>
-      <Table
-        //@ts-ignore
-        columns={columns}
-        data={payments}
-        className="w-full shadow-none card-view-table"
-        scroll={{ x: 350, y: 500 }}
-        rowClassName={(record, i) =>
-          selected?.id === record?.id ? `row-highlight` : ''
-        }
-        emptyText={t('text-no-card-found')}
-        onRow={(record) => ({
-          onClick: onClickRow.bind(null, record),
-        })}
-      />
+      <div className="block lg:hidden space-y-4">
+        {payments.map((payment: any) => (
+          <div
+            key={payment.id}
+            onClick={() => onClickRow(payment)}
+            className={`w-full mx-2 md:mx-4 border rounded-lg p-4 shadow-md flex justify-between items-center ${selected?.id === payment.id ? 'bg-green-50' : 'bg-white'
+              }`}
+          >
+            <div className="flex items-center">
+              <Image
+                src={images[payment.network] || Fallback}
+                width={40}
+                height={28}
+                alt={t('text-company')}
+                className="mr-3"
+              />
+              <div>
+                <div className="text-sm font-medium text-gray-700">
+                  {t('text-company')}: {payment.network || 'Unknown'}
+                </div>
+                <div className="text-sm text-gray-600">
+                  {t('text-card-number')}: **** **** **** {payment.last4}
+                </div>
+                <div className="text-sm text-gray-600">
+                  {t('text-card-owner-name')}: {payment.owner_name}
+                </div>
+                <div className="text-sm text-gray-600">
+                  {t('text-card-expire')}: {payment.expires}
+                </div>
+              </div>
+            </div>
+            <div className={`w-10 text-accent transition-opacity ${selected?.id === payment.id ? 'opacity-100' : 'opacity-0'}`}>
+              <CheckIconWithBg />
+            </div>
+          </div>
+        ))}
+      </div>
+
+
+
+      {/* Desktop View - Table Layout */}
+      <div className="hidden lg:block">
+        <Table
+          //@ts-ignore
+          columns={columns}
+          data={payments}
+          className="w-full shadow-none card-view-table"
+          scroll={{ x: 350, y: 500 }}
+          rowClassName={(record, i) =>
+            selected?.id === record?.id ? `row-highlight` : ''
+          }
+          emptyText={t('text-no-card-found')}
+          onRow={(record) => ({
+            onClick: onClickRow.bind(null, record),
+          })}
+        />
+      </div>
+
       <div className="flex justify-end mt-8">
         <Button
           loading={loading}
           disabled={!!loading}
           className="!h-9 px-4"
-          onClick={() => {
-            continuePayment(selected?.method_key);
-          }}
+          onClick={() => continuePayment(selected?.method_key)}
         >
           {t('text-pay')}
         </Button>
@@ -209,3 +251,5 @@ const StripeSavedCardsList = ({
 };
 
 export default StripeSavedCardsList;
+
+

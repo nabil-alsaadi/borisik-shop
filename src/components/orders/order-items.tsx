@@ -16,7 +16,8 @@ import { OrderStatus, Product } from '@/types';
 import classNames from 'classnames';
 
 //FIXME: need to fix this usePrice hooks issue within the table render we may check with nested property
-const OrderItemList = (_: any, record: any) => {
+const OrderItemList = (x: any, record: any) => {
+  console.log('OrderItemList', record)
   const { price } = usePrice({
     amount: record.pivot?.unit_price,
   });
@@ -69,7 +70,7 @@ export const OrderItems = ({
   refund,
   settings,
 }: {
-  products: Product;
+  products: Product[];
   orderId: any;
   orderStatus: string;
   refund: boolean;
@@ -113,103 +114,136 @@ export const OrderItems = ({
         return <div>{price}</div>;
       },
     },
-    {
-      title: '',
-      dataIndex: '',
-      align: alignRight,
-      width: 140,
-      render: function RenderReview(_: any, record: any) {
-        if (refund) {
-          return;
-        }
+    // {
+    //   title: '',
+    //   dataIndex: '',
+    //   align: alignRight,
+    //   width: 140,
+    //   render: function RenderReview(_: any, record: any) {
+    //     if (refund) {
+    //       return;
+    //     }
 
-        const alreadyReviewedInOrder = isAlreadyReviewedInThisOrder(
-          record,
-          orderId,
-          settings,
-        );
+    //     const alreadyReviewedInOrder = isAlreadyReviewedInThisOrder(
+    //       record,
+    //       orderId,
+    //       settings,
+    //     );
 
-        function openReviewModal() {
-          openModal('REVIEW_RATING', {
-            product_id: record.id,
-            shop_id: record.shop_id,
-            order_id: orderId,
-            name: record.name,
-            image: record.image,
-            // my_review: record?.is_digital ? getReview(record) : null,
-            my_review: reviewSystem(record, settings),
-            ...(record.pivot?.variation_option_id && {
-              variation_option_id: record.pivot?.variation_option_id,
-            }),
-          });
-        }
+    //     function openReviewModal() {
+    //       openModal('REVIEW_RATING', {
+    //         product_id: record.id,
+    //         shop_id: record.shop_id,
+    //         order_id: orderId,
+    //         name: record.name,
+    //         image: record.image,
+    //         // my_review: record?.is_digital ? getReview(record) : null,
+    //         my_review: reviewSystem(record, settings),
+    //         ...(record.pivot?.variation_option_id && {
+    //           variation_option_id: record.pivot?.variation_option_id,
+    //         }),
+    //       });
+    //     }
 
-        // Button text control for digital product
-        const DigitalProductReviewButtonText = () => {
-          if (settings?.reviewSystem?.value === 'review_single_time') {
-            return getReview(record)
-              ? t('text-update-review')
-              : t('text-write-review');
-          }
+    //     // Button text control for digital product
+    //     const DigitalProductReviewButtonText = () => {
+    //       if (settings?.reviewSystem?.value === 'review_single_time') {
+    //         return getReview(record)
+    //           ? t('text-update-review')
+    //           : t('text-write-review');
+    //       }
 
-          return !alreadyReviewedInOrder
-            ? t('text-update-review')
-            : t('text-write-review');
-        };
+    //       return !alreadyReviewedInOrder
+    //         ? t('text-update-review')
+    //         : t('text-write-review');
+    //     };
 
-        // Button text control for physical product
-        const PhysicalProductReviewButtonText = () => {
-          if (settings?.reviewSystem?.value === 'review_single_time') {
-            return getReview(record)
-              ? t('text-update-review')
-              : t('text-write-review');
-          }
+    //     // Button text control for physical product
+    //     const PhysicalProductReviewButtonText = () => {
+    //       if (settings?.reviewSystem?.value === 'review_single_time') {
+    //         return getReview(record)
+    //           ? t('text-update-review')
+    //           : t('text-write-review');
+    //       }
 
-          return alreadyReviewedInOrder
-            ? t('text-already-review')
-            : t('text-write-review');
-        };
+    //       return alreadyReviewedInOrder
+    //         ? t('text-already-review')
+    //         : t('text-write-review');
+    //     };
 
-        if (orderStatus === OrderStatus?.COMPLETED || refund) {
-          return (
-            <>
-              <button
-                onClick={openReviewModal}
-                className={classNames(
-                  'cursor-pointer text-sm font-semibold text-body transition-colors hover:text-accent',
-                )}
-                disabled={alreadyReviewedInOrder ? true : false}
-              >
-                {/* {getReview(record)
-                  ? t('text-update-review')
-                  : t('text-write-review')} */}
-                {record?.is_digital ? (
-                  <DigitalProductReviewButtonText />
-                ) : (
-                  <PhysicalProductReviewButtonText />
-                )}
-              </button>
-            </>
-          );
-        }
-      },
-    },
+    //     if (orderStatus === OrderStatus?.COMPLETED || refund) {
+    //       return (
+    //         <>
+    //           <button
+    //             onClick={openReviewModal}
+    //             className={classNames(
+    //               'cursor-pointer text-sm font-semibold text-body transition-colors hover:text-accent',
+    //             )}
+    //             disabled={alreadyReviewedInOrder ? true : false}
+    //           >
+    //             {/* {getReview(record)
+    //               ? t('text-update-review')
+    //               : t('text-write-review')} */}
+    //             {record?.is_digital ? (
+    //               <DigitalProductReviewButtonText />
+    //             ) : (
+    //               <PhysicalProductReviewButtonText />
+    //             )}
+    //           </button>
+    //         </>
+    //       );
+    //     }
+    //   },
+    // },
   ];
-
+  console.log('products=============', products, products)
   return (
-    <Table
-      //@ts-ignore
-      columns={orderTableColumns}
-      //@ts-ignore
-      data={products as Product}
-      rowKey={(record: any) =>
-        record.pivot?.variation_option_id
-          ? record.pivot.variation_option_id
-          : record.created_at
-      }
-      className="orderDetailsTable w-full"
-      rowClassName="!cursor-auto"
-      scroll={{ x: 350, y: 500 }}
-    />
+    // <Table
+    //   //@ts-ignore
+    //   columns={orderTableColumns}
+    //   //@ts-ignore
+    //   data={products}
+    //   rowKey={(record: any) =>
+    //     record.pivot?.variation_option_id
+    //       ? record.pivot.variation_option_id
+    //       : record.created_at
+    //   }
+    //   className="orderDetailsTable w-full"
+    //   rowClassName="!cursor-auto"
+    //   scroll={{ x: 350, y: 500 }}
+    // />
+    <div className="md:mx-auto md:px-0 px-4 overflow-x-auto">
+      {/* Desktop Table View */}
+      <div className="hidden md:block">
+        <Table
+          //@ts-ignore
+          columns={orderTableColumns}
+          //@ts-ignore
+          data={products}
+          rowKey={(record: any) =>
+            record.pivot?.variation_option_id
+              ? record.pivot.variation_option_id
+              : record.created_at
+          }
+          className="orderDetailsTable w-full md:w-auto" // Full width on mobile
+          rowClassName="!cursor-auto"
+          scroll={{ x: '100%', y: 500 }}
+        />
+      </div>
+
+      {/* Mobile List View */}
+      <div className="md:hidden">
+        {products.map((product: any) => (
+          <div key={product.id} className="border-b py-4">
+            {OrderItemList(undefined, product)}
+            <div className="flex justify-between mt-2">
+              <span>{t('text-quantity')}: {product.pivot.order_quantity}</span>
+              <span>{t('text-price')}: {usePrice({ amount: product.pivot.subtotal }).price}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
   );
 };
